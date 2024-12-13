@@ -32,11 +32,14 @@ const CreateEmployee: React.FunctionComponent = () => {
 
     const uploadImage = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files.length > 0) {
+            if (!/image/.test(event.target.files[0].type)) {
+                toast.error('Only image files are allowed')
+                return
+            }
             const reader = new FileReader();
             reader.readAsDataURL(event.target.files[0])
             reader.onloadend = () => {
                 setValue('image', reader.result as string)
-                console.log(reader.result)
             }
         }
     }
