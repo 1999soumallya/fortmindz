@@ -3,7 +3,7 @@ import ErrorText from "@/components/typography/ErrorText"
 import axios from "@/config/axios"
 import TitleContainer from "@/containers/TitleContainer"
 import { yupResolver } from "@hookform/resolvers/yup"
-import React, { useEffect, useMemo, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import { useNavigate, useParams } from "react-router-dom"
@@ -26,15 +26,19 @@ const UpdateEmployee: React.FunctionComponent = () => {
 
     const { employee } = useAppSelector(state => state.employee)
 
-    useMemo(() => id && GetEmployeeDetails(id, dispatch), [id, dispatch])
+    useEffect(() => {
+        if (id) {
+            GetEmployeeDetails(id, dispatch)
+        }
+    }, [id, dispatch])
 
     const formSchema: YUP.ObjectSchema<EMPLOYEE_ADD> = YUP.object().shape({
         fullName: YUP.string().required('Provide valid employee name for update employee'),
         email: YUP.string().required('Provide valid employee email for update employee').email('Provide valid employee email for update employee'),
         phone: YUP.number().required('Provide valid employee mobile number for update employee').typeError('Provide valid employee mobile number for update employee'),
         image: YUP.string().required('Provide your profile picture for update employee'),
-        age: YUP.number().required('Provide valid employee age for update employee').typeError('Provide valid employee age for update employee'),
-        salary: YUP.number().required('Provide valid employee salary for update employee').typeError('Provide valid employee salary for update employee'),
+        age: YUP.number().required('Provide valid employee age for update employee').typeError('Provide valid employee age for update employee').positive('Provide valid employee age for update employee'),
+        salary: YUP.number().required('Provide valid employee salary for update employee').typeError('Provide valid employee salary for update employee').positive('Provide valid employee salary for update employee'),
     })
 
     const { register, handleSubmit, formState: { errors }, control, setValue, watch, getValues } = useForm<EMPLOYEE_ADD>({ resolver: yupResolver(formSchema), mode: 'all' })

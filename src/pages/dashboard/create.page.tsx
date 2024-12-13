@@ -24,8 +24,8 @@ const CreateEmployee: React.FunctionComponent = () => {
         email: YUP.string().required('Provide valid employee email for create new employee').email('Provide valid employee email for create new employee'),
         phone: YUP.number().required('Provide valid employee mobile number for create new employee').typeError('Provide valid employee mobile number for create new employee'),
         image: YUP.string().required('Provide your profile picture for create new employee'),
-        age: YUP.number().required('Provide valid employee age for create new employee').typeError('Provide valid employee age for create new employee'),
-        salary: YUP.number().required('Provide valid employee salary for create new employee').typeError('Provide valid employee salary for create new employee'),
+        age: YUP.number().required('Provide valid employee age for create new employee').typeError('Provide valid employee age for create new employee').positive('Provide valid employee age for create new employee'),
+        salary: YUP.number().required('Provide valid employee salary for create new employee').typeError('Provide valid employee salary for create new employee').positive('Provide valid employee salary for create new employee'),
     })
 
     const { register, handleSubmit, formState: { errors }, control, setValue, watch, getValues } = useForm<EMPLOYEE_ADD>({ resolver: yupResolver(formSchema), mode: 'all' })
