@@ -117,7 +117,7 @@ const UpdateEmployee: React.FunctionComponent = () => {
                         </div>
 
                         <div className="mb-4">
-                            <InputFile labelTitle='Employee profile picture' containerStyle="mt-4 mb-4" placeholder={'Enter Employee Profile Picture'} changeHandler={uploadImage} />
+                            <InputFile labelTitle='Employee profile picture' containerStyle="mt-4 mb-4" accept="image/*" placeholder={'Enter Employee Profile Picture'} changeHandler={uploadImage} />
                             {errors.image && <ErrorText className="mt-2">{errors.image.message}</ErrorText>}
                         </div>
 
